@@ -48,9 +48,14 @@ int main( int argc, char *argv[] )
 	}
 
 #endif
-	
+
+	vector<int> compression_params;
+    compression_params.push_back(CV_IMWRITE_PNG_COMPRESSION);
+    compression_params.push_back(9);
+
 	imshow( "source", src );
 	imshow( "detected lines", cdst );
+	imwrite( "houghed.png", cdst, compression_params );
 
 	waitKey();
 
