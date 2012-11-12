@@ -31,8 +31,8 @@ def fitQuadratic( xdata, ydata ):
 	A = matrix( [ [ len( xdata ), x[ 0 ], x[ 1 ] ], x[ 0 : 3 ], x[ 1 : ] ] )
 	X = [ yi, xiyi, xi2yi ]
 
-	a, b, c = linalg.solve( A, X )
-	return ( c, b, a )
+	c, b, a = linalg.solve( A, X )
+	return ( a, b, c )
 
 
 def fitLinear( xdata, ydata ):
@@ -50,8 +50,8 @@ def fitLinear( xdata, ydata ):
 	A = matrix( [ [ len( xdata ), x[ 0 ] ], x ] )
 	X = [ yi, xiyi ]
 
-	a, b = linalg.solve( A, X )
-	return ( b, a )
+	b, a = linalg.solve( A, X )
+	return ( a, b )
 
 
 def yForX( x, abc ):
@@ -76,6 +76,7 @@ if __name__ == '__main__': #Then show this example
 	Y = [ yForX( x, abc ) for x in X ]
 
 	ab = fitLinear( xdata, ydata )
+	print ab
 	Y2 = [ yForX( x, ab ) for x in X ]
 	plt.plot( xdata, ydata, 'o', X, Y, 'k', X, Y2 )
 
