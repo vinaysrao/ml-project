@@ -25,7 +25,7 @@ def monotone_chain( xdata, ydata ):
 			upper.pop()
 		upper.append( p )
 
-	return lower[ : -1 ] + upper[ : -1 ]
+	return lower + upper
 
 
 if __name__ == '__main__':
