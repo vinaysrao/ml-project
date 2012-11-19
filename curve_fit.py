@@ -76,9 +76,6 @@ if __name__ == '__main__': #Then show this example
 	X = arange( min( xdata ), max( xdata ) + 1 )
 	Y = [ yForX( x, abc ) for x in X ]
 
-	ab = fitLinear( xdata, ydata )
-	print ab
-	Y2 = [ yForX( x, ab ) for x in X ]
-	plt.plot( xdata, ydata, 'o', X, Y, 'k', X, Y2 )
+	plt.plot( xdata, ydata, 'o', X, Y, 'k' )
 
 	plt.show()

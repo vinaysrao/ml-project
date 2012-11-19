@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from curve_fit import fitQuadratic
 import numpy as np
 import sys
+from curve_fit import yForX
 
 def edgeConv( StrImg ):
 	image = cv.LoadImageM( StrImg )
@@ -52,8 +53,12 @@ def curveFit( edges, X, Y, tilesizeX, tilesizeY, graphMat ):
 	#print xCoords,yCoords
 	# plt.plot( xCoords, yCoords, 'o' )
 	# plt.show()
-	if xCoords!=[]:
+	if xCoords!=[]:	
 		a,b,c = fitQuadratic( xCoords, yCoords )
+		X1 = range( min( xCoords ), max( xCoords ) )
+		Y1 = [ yForX( x, ( a, b, c ) ) for x in X1 ]
+		plt.plot( X1, Y1, 'k', xCoords, yCoords, 'o' )
+		plt.show()
 		graphMat[ int( Y / tilesizeY )-1 ][ int( X / tilesizeX )-1 ] = [ a, b, c ]
  
 #cv.SaveImage('display.jpg',edges)
