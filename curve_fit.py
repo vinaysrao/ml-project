@@ -2,7 +2,6 @@
 
 from numpy import linalg
 from numpy import matrix
-import sys
 
 
 def xWithY( xdata, ydata, xpower = 1 ):
@@ -13,7 +12,7 @@ def xWithY( xdata, ydata, xpower = 1 ):
 	return xwithy
 
 
-def fitPolynomial( xdata, ydata, order ):
+def fitPolynomial( xdata, ydata, order = 2 ):
 	"""Fit a polynomial of the given order
 	that matches the given x and y coordinates.
 	This function takes the x and y coordinates
@@ -56,7 +55,7 @@ if __name__ == '__main__': #Then show this example
 	abc = fitPolynomial( xdata, ydata, 4 )
 	print abc
 
-	X = arange( min( xdata ), max( xdata ) + 1 )
+	X = arange( min( xdata ), max( xdata ) + 1, 0.1 )
 	Y = [ yForX( x, abc, 4 ) for x in X ]
 
 	plt.plot( xdata, ydata, 'o', X, Y, 'k' )
