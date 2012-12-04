@@ -5,6 +5,7 @@ import numpy as np
 import sys
 from curve_fit import yForX
 
+
 def edgeConv( StrImg ):
 	image = cv.LoadImageM( StrImg )
 	gray = cv.CreateImage( cv.GetSize(image), 8, 1 )
@@ -22,7 +23,7 @@ def divPlot( edges, tileNoX = 3, tileNoY = 3 ):
 	j = 0
 	print edges.width,edges.height
 	print 'xtile='+str(tileSizeX)+' ytile='+str(tileSizeY)
-	#return
+
 	while j <= ( edges.height - tileSizeY ):
 		print 'j=',j
 		i = 0
@@ -61,6 +62,7 @@ def curveFit( edges, X, Y, tilesizeX, tilesizeY, graphMat ):
 		plt.show()
 		graphMat[ int( Y / tilesizeY )-1 ][ int( X / tilesizeX )-1 ] = [ a, b, c ]
  
-#cv.SaveImage('display.jpg',edges)
-edges = edgeConv(sys.argv[1])
-divPlot(edges)
+if __name__ == '__main__':
+	#cv.SaveImage('display.jpg',edges)
+	edges = edgeConv(sys.argv[1])
+	divPlot(edges)
