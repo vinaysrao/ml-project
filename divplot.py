@@ -1,6 +1,6 @@
 import cv
 import matplotlib.pyplot as plt
-from curve_fit import fitQuadratic
+from curve_fit import fitPolynomial
 import numpy as np
 import sys
 from curve_fit import yForX
@@ -55,12 +55,12 @@ def curveFit( edges, X, Y, tilesizeX, tilesizeY, graphMat ):
 	# plt.plot( xCoords, yCoords, 'o' )
 	# plt.show()
 	if xCoords!=[]:	
-		a,b,c = fitQuadratic( xCoords, yCoords )
+		result = fitPolynomial( xCoords, yCoords, 3 )
 		X1 = range( min( xCoords ), max( xCoords ) )
-		Y1 = [ yForX( x, ( a, b, c ) ) for x in X1 ]
+		Y1 = [ yForX( x,  result, 3 ) for x in X1 ]
 		plt.plot( X1, Y1, 'k', xCoords, yCoords, 'o' )
 		plt.show()
-		graphMat[ int( Y / tilesizeY )-1 ][ int( X / tilesizeX )-1 ] = [ a, b, c ]
+		graphMat[ int( Y / tilesizeY )-1 ][ int( X / tilesizeX )-1 ] = result
  
 if __name__ == '__main__':
 	#cv.SaveImage('display.jpg',edges)
