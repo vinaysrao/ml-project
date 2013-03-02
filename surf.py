@@ -23,11 +23,13 @@ np_features = numpy.array( features )
 centroids, labels = kmeans2( np_features, 50 )
 print labels
 
-counter = 1
+counter = 0
 X = []
 Y = []
+files = []
 
 for im in open( sys.argv[ 1 ] ):
+    files.append( im.strip() )
     counts = numpy.zeros( 50 )
     img = imread( im.strip() )
     k, d = surf.detectAndCompute( img, None )
@@ -40,5 +42,6 @@ for im in open( sys.argv[ 1 ] ):
     
 lin_clf = svm.LinearSVC()
 lin_clf.fit( X, Y )
+trial = int( sys.argv[ 2 ] )
 
-print lin_clf.predict( X[ 3 ] )
+print files[ trial ], ": ", files[ lin_clf.predict( X[ trial ] ) ]
