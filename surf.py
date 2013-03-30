@@ -6,6 +6,9 @@ import numpy
 
 features = []
 
+if( len( sys.argv ) != 3 ):
+    print "Usage: $python surf.py imagelist.txt <i: 0...number_of_images-1>"
+
 for im in open( sys.argv[ 1 ] ):
     img = imread( im.strip() )
     
