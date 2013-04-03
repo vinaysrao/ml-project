@@ -29,10 +29,13 @@ class Category:
             self.bagofwords.append( bow )
 
 
-def train_routine( argv ):
-    training_file = argv[ 1 ]
-    svm_file = argv[ 2 ]
-    centroid_file = argv[ 3 ]
+def train_routine( training_file, output_folder ):
+    if output_folder[-1] != '/':
+        output_folder += '/'
+
+    svm_file = output_folder + 'svm.txt'
+    centroid_file = output_folder + 'centroids.txt'
+    ids_file = output_folder + 'ids.txt'
     
     surf = cv2.SURF( 250 )
     categories = {}
@@ -77,9 +80,10 @@ def train_routine( argv ):
     
     helpers.saveObject( lin_clf, svm_file )
     helpers.saveObject( centroids, centroid_file )
+    helpers.saveObject( ids, ids_file )
 
 if __name__ == "__main__":
-    if( len( sys.argv ) != 4 ):
-        print "Usage: $python svm_train.py training_file svm_file centroid_file"
+    if( len( sys.argv ) != 3 ):
+        print "Usage: $python svm_train.py training_file output_folder"
         sys.exit( 1 )
-    train_routine( sys.argv )
+    train_routine( sys.argv[1], sys.argv[2] )
