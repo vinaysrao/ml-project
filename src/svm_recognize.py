@@ -10,7 +10,7 @@ from category import Category
 
 
 def recognize_routine(recognize_file, training_folder):
-    surf = cv2.SURF(250)
+    surf = cv2.SURF(250, extended=False)
 
     if training_folder[-1] != '/':
         training_folder += '/'
@@ -45,6 +45,8 @@ def recognize_routine(recognize_file, training_folder):
             if ids[i] == id:
                 label = i
         print category.label, ":", label
+
+        del category
 
 
 if __name__ == "__main__":

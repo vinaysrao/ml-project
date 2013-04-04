@@ -3,7 +3,7 @@
 import sys
 import cv2
 from sklearn import svm
-from scipy.cluster.vq import kmeans2, vq
+from scipy.cluster.vq import kmeans2, vq, whiten
 import numpy
 
 import helpers
@@ -27,14 +27,14 @@ def train_routine(training_file, output_folder):
     centroid_file = output_folder + 'centroids.txt'
     ids_file = output_folder + 'ids.txt'
 
-    surf = cv2.SURF(250)
+    surf = cv2.SURF(250, extended=False)
     categories = {}
     ids = {}
     id = 1
     features = []
 
+    print "Extracting features"
     for line in open(training_file):
-        print "Extracting features"
         try:
             category, path = line.split(';')
         except:
@@ -44,6 +44,7 @@ def train_routine(training_file, output_folder):
 
         try:
             img = cv2.imread(path)
+            img = cv2.resize(img, (500, 500))
         except Exception as e:
             print e
             continue
@@ -55,12 +56,12 @@ def train_routine(training_file, output_folder):
             ids[category] = id
             id += 1
         categories[category].add_feature(descriptors)
-        print categories[category].features[0][0][0]
         features.extend(descriptors)
 
     print "Calculating centroids"
     np_features = numpy.array(features)
-    centroids, labels = kmeans2(np_features, FEATURE_TYPES)
+    np_features = whiten(np_features)
+    centroids, _ = kmeans2(np_features, FEATURE_TYPES, iter=100)
 
     print "Forming bag of words"
     X, Y = [], []

@@ -3,7 +3,7 @@
 import pickle
 import sys
 
-FEATURE_TYPES = 50  # Number of clusters features are put into; thus forming kinds of features. Usually sqrt(n/2)
+FEATURE_TYPES = 500  # Number of clusters features are put into; thus forming kinds of features. Usually sqrt(n/2)
 
 def norm(array, p=2):
     """Returns the norm of the given array.
