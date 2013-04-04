@@ -33,8 +33,8 @@ def train_routine(training_file, output_folder):
     id = 1
     features = []
 
-    print "Extracting features"
     for line in open(training_file):
+        print "Extracting features"
         try:
             category, path = line.split(';')
         except:
@@ -51,10 +51,11 @@ def train_routine(training_file, output_folder):
         keypoints, descriptors = surf.detectAndCompute(img, None)
 
         if not category in categories:
-            categories[category] = Category(category)
+            categories[category] = Category(label=category)
             ids[category] = id
             id += 1
         categories[category].add_feature(descriptors)
+        print categories[category].features[0][0][0]
         features.extend(descriptors)
 
     print "Calculating centroids"
@@ -68,9 +69,8 @@ def train_routine(training_file, output_folder):
         for bow in categories[category].bagofwords:
             X.append(bow)
             Y.append(ids[category])
-
     print "Fitting linear SVMs onto the bag of words"
-    lin_clf = svm.LinearSVC()
+    lin_clf = svm.SVC()
     lin_clf.fit(X, Y)
 
     helpers.saveObject(lin_clf, svm_file)

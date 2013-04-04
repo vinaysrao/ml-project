@@ -16,7 +16,6 @@ def recognize_routine(recognize_file, training_folder):
         training_folder += '/'
 
     ids = helpers.loadObject(training_folder + 'ids.txt')
-    print ids
     linear_clf = helpers.loadObject(training_folder + 'svm.txt')
     centroids = helpers.loadObject(training_folder + 'centroids.txt')
 
@@ -41,7 +40,11 @@ def recognize_routine(recognize_file, training_folder):
         category.calc_bagofwords(centroids)
 
         bow = category.bagofwords[0]
-        print category.label, ":", linear_clf.predict(bow)
+        id = int(linear_clf.predict(bow)[0])
+        for i in ids:
+            if ids[i] == id:
+                label = i
+        print category.label, ":", label
 
 
 if __name__ == "__main__":

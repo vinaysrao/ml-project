@@ -12,13 +12,15 @@ class Category:
     vector, after all possible feature types are added to this
     category.
     """
-    def __init__(self, label=None, features=[]):
+    def __init__(self, label=None, features=None):
         self.label = label
         self.features = features
         self.bagofwords = []
 
     def add_feature(self, feature):
         """Add one feature vector from one image"""
+        if self.features is None:
+            self.features = []
         self.features.append(feature)
 
     def calc_bagofwords(self, centroids):
