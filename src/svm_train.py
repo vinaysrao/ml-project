@@ -7,36 +7,8 @@ from scipy.cluster.vq import kmeans2, vq
 import numpy
 
 import helpers
-
-FEATURE_TYPES = 50  # Number of clusters features are put into; thus forming kinds of features. Usually sqrt(n/2)
-
-
-class Category:
-    """
-    This class represents one category that is encountered
-    while training. It is used to calculate the bag of words
-    vector, after all possible feature types are added to this
-    category.
-    """
-    def __init__(self, label, features=[]):
-        self.label = label
-        self.features = features
-        self.bagofwords = []
-
-    def add_feature(self, feature):
-        """Add one feature vector"""
-        self.features.append(feature)
-
-    def calc_bagofwords(self, centroids):
-        """Calculate bag of words using the features
-        added to an object."""
-        for feature in self.features:
-            labels, _ = vq(numpy.array(feature), centroids)
-            bow = numpy.zeros(FEATURE_TYPES)
-            for label in labels:
-                bow[label] += 1
-            helpers.normalize(bow)
-            self.bagofwords.append(bow)
+from category import Category
+from helpers import FEATURE_TYPES
 
 
 def train_routine(training_file, output_folder):
@@ -74,6 +46,7 @@ def train_routine(training_file, output_folder):
             img = cv2.imread(path)
         except Exception as e:
             print e
+            continue
 
         keypoints, descriptors = surf.detectAndCompute(img, None)
 

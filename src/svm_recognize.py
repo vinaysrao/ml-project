@@ -1,14 +1,47 @@
 #!/usr/bin/python
 
 import sys
+import cv2
+from scipy.cluster.vq import vq
+import numpy
+
 import helpers
+from category import Category
 
 
 def recognize_routine(recognize_file, training_folder):
+    surf = cv2.SURF(250)
+
     if training_folder[-1] != '/':
         training_folder += '/'
 
-    print helpers.loadObject(training_folder + 'ids.txt')
+    ids = helpers.loadObject(training_folder + 'ids.txt')
+    print ids
+    linear_clf = helpers.loadObject(training_folder + 'svm.txt')
+    centroids = helpers.loadObject(training_folder + 'centroids.txt')
+
+    for line in open(recognize_file):
+        try:
+            cat, path = line.split(';')
+        except:
+            print "Error: File not in proper format. Ensure: <category/class name>; <path to image of said category>"
+            sys.exit(0)
+        path = path.strip()
+
+        try:
+            img = cv2.imread(path)
+        except Exception as e:
+            print e
+            continue
+
+        keypoints, descriptors = surf.detectAndCompute(img, None)
+
+        category = Category(label=cat)
+        category.add_feature(descriptors)
+        category.calc_bagofwords(centroids)
+
+        bow = category.bagofwords[0]
+        print category.label, ":", linear_clf.predict(bow)
 
 
 if __name__ == "__main__":
