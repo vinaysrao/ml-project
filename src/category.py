@@ -15,13 +15,23 @@ class Category:
     def __init__(self, label=None, features=None):
         self.label = label
         self.features = features
-        self.bagofwords = []
+        self.bagofwords = list()
 
     def add_feature(self, feature):
         """Add one feature vector from one image"""
         if self.features is None:
-            self.features = []
+            self.features = list()
         self.features.append(feature)
+
+    def yield_features(self, n=10):
+        """Yield a specific number of features for training.
+        Defaults to n=10"""
+        features = list()
+        if n > len(self.features):
+            n = len(self.features)
+        for i in xrange(n):
+            features.append(self.features[i])
+        return features
 
     def calc_bagofwords(self, centroids):
         """Calculate bag of words using the features

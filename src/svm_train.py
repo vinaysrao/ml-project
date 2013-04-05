@@ -28,10 +28,10 @@ def train_routine(training_file, output_folder):
     ids_file = output_folder + 'ids.txt'
 
     surf = cv2.SURF(250, extended=False)
-    categories = {}
-    ids = {}
+    categories = dict()
+    ids = dict()
     id = 1
-    features = []
+    features = list()
 
     print "Extracting features"
     for line in open(training_file):
@@ -56,12 +56,17 @@ def train_routine(training_file, output_folder):
             ids[category] = id
             id += 1
         categories[category].add_feature(descriptors)
-        features.extend(descriptors)
+
+    for category in categories:
+        f = categories[category].yield_features()
+        for i in f:
+            features.extend(i)
+    print len(features)
 
     print "Calculating centroids"
     np_features = numpy.array(features)
-    np_features = whiten(np_features)
-    centroids, _ = kmeans2(np_features, FEATURE_TYPES, iter=100)
+    print np_features.shape
+    centroids, labels = kmeans2(np_features, FEATURE_TYPES)
 
     print "Forming bag of words"
     X, Y = [], []
