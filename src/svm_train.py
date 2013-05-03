@@ -59,13 +59,13 @@ def train_routine(training_file, output_folder):
 
     for category in categories:
         f = categories[category].yield_features()
-        for i in f:
-            features.extend(i)
-    print len(features)
+        features.extend(f)
+        #for i in f:
+            #features.extend(i)
 
     print "Calculating centroids"
     np_features = numpy.array(features)
-    print np_features.shape
+    print "Features: ", np_features.shape
     centroids, labels = kmeans2(np_features, FEATURE_TYPES)
 
     print "Forming bag of words"
@@ -84,7 +84,7 @@ def train_routine(training_file, output_folder):
     helpers.saveObject(ids, ids_file)
 
 if __name__ == "__main__":
-    if(len(sys.argv) != 3):
+    if(len(sys.argv) < 3):
         print "Usage: $python svm_train.py training_file output_folder"
         sys.exit(1)
     train_routine(sys.argv[1], sys.argv[2])

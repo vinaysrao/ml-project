@@ -1,8 +1,21 @@
 import numpy
 from scipy.cluster.vq import vq
+import random
+import numpy
 
 import helpers
 from helpers import FEATURE_TYPES
+
+
+def get_features(features, n):
+    from scipy.cluster.vq import kmeans2
+    n = len(features) * n
+    f_full = list()
+    for feature in features:
+        for f in feature:
+            f_full.append(f)
+    centroids, labels = kmeans2(numpy.array(f_full), n)
+    return centroids
 
 
 class Category:
@@ -23,14 +36,13 @@ class Category:
             self.features = list()
         self.features.append(feature)
 
-    def yield_features(self, n=10):
+    def yield_features(self, n=50):
         """Yield a specific number of features for training.
         Defaults to n=10"""
         features = list()
         if n > len(self.features):
             n = len(self.features)
-        for i in xrange(n):
-            features.append(self.features[i])
+        features = get_features(self.features, n)
         return features
 
     def calc_bagofwords(self, centroids):

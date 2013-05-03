@@ -22,19 +22,20 @@ def add_files(folder, trainfile, testfile):
 		if os.path.isdir(folder + file):
 			path = os.path.abspath(folder + file) + '/'
 			list = os.listdir(path)
+			# l = len(list)
 			l = 50
-			t = int(0.9 * l)
+			t = int(0.7 * l)
 			for img in xrange(t):
 				spl = list[img].split('.')
 				try:
-					if spl[-1] in ['jpg', 'jpeg', 'png' ] and spl[-2] != 'mask':
+					if spl[-1] in ['jpg', 'jpeg', 'png' ]:
 						train.writelines(file + ';' + path + list[img] + '\n')
 				except:
 					continue
 			for img in xrange(t + 1, l):
 				spl = list[img].split('.')
 				try:
-					if spl[-1] in ['jpg', 'jpeg', 'png' ] and spl[-2] != 'mask':
+					if spl[-1] in ['jpg', 'jpeg', 'png' ]:
 						test.writelines(file + ';' + path + list[img] + '\n')
 				except:
 					continue
