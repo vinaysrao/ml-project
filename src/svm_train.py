@@ -59,9 +59,9 @@ def train_routine(training_file, output_folder):
 
     for category in categories:
         f = categories[category].yield_features()
-        features.extend(f)
-        #for i in f:
-            #features.extend(i)
+        #features.extend(f)
+        for i in f:
+            features.extend(i)
 
     print "Calculating centroids"
     np_features = numpy.array(features)

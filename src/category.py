@@ -36,13 +36,14 @@ class Category:
             self.features = list()
         self.features.append(feature)
 
-    def yield_features(self, n=50):
+    def yield_features(self, n=20):
         """Yield a specific number of features for training.
         Defaults to n=10"""
         features = list()
         if n > len(self.features):
             n = len(self.features)
-        features = get_features(self.features, n)
+        #features = get_features(self.features, n)
+        features = random.sample(self.features, n)
         return features
 
     def calc_bagofwords(self, centroids):
