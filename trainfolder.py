@@ -17,8 +17,18 @@ def add_files(folder, trainfile, testfile):
 
 	train = open(trainfile, 'w')
 	test = open(testfile, 'w')
+	
+	try:
+                numofclasses = int(sys.argv[-1])
+        except:
+                numofclasses = len(os.listdir(folder))
+
+        counter = 0
 
 	for file in os.listdir(folder):
+                if counter > numofclasses:
+                        break
+                counter += 1
 		if os.path.isdir(folder + file):
 			path = os.path.abspath(folder + file) + '/'
 			list = os.listdir(path)
@@ -43,7 +53,7 @@ def add_files(folder, trainfile, testfile):
 	test.close()
 
 if __name__ == "__main__":
-	if len(sys.argv) != 4:
+	if len(sys.argv) < 4:
 		print "Usage: $python trainfolder.py folder trainfile testfile"
 		sys.exit(1)
 	add_files(sys.argv[1], sys.argv[2], sys.argv[3])

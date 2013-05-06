@@ -42,8 +42,8 @@ class Category:
         features = list()
         if n > len(self.features):
             n = len(self.features)
-        #features = get_features(self.features, n)
-        features = random.sample(self.features, n)
+        features = get_features(self.features, n)
+        #features = random.sample(self.features, n)
         return features
 
     def calc_bagofwords(self, centroids):

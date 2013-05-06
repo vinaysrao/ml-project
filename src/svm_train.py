@@ -57,16 +57,18 @@ def train_routine(training_file, output_folder):
             id += 1
         categories[category].add_feature(descriptors)
 
-    for category in categories:
-        f = categories[category].yield_features()
-        #features.extend(f)
-        for i in f:
-            features.extend(i)
+    #for category in categories:
+        #f = categories[category].yield_features()
+        ##features.extend(f)
+        #for i in f:
+            #features.extend(i)
 
     print "Calculating centroids"
-    np_features = numpy.array(features)
-    print "Features: ", np_features.shape
-    centroids, labels = kmeans2(np_features, FEATURE_TYPES)
+    #np_features = numpy.array(features)
+    #print "Features: ", np_features.shape
+    #centroids, labels = kmeans2(np_features, FEATURE_TYPES)
+    centroids = helpers.loadObject(output_folder + 'centroids.txt')
+    print centroids.shape
 
     print "Forming bag of words"
     X, Y = [], []
@@ -76,7 +78,7 @@ def train_routine(training_file, output_folder):
             X.append(bow)
             Y.append(ids[category])
     print "Fitting linear SVMs onto the bag of words"
-    lin_clf = svm.SVC()
+    lin_clf = svm.LinearSVC()
     lin_clf.fit(X, Y)
 
     helpers.saveObject(lin_clf, svm_file)
