@@ -22,8 +22,8 @@ def add_files(folder, trainfile, testfile):
 		if os.path.isdir(folder + file):
 			path = os.path.abspath(folder + file) + '/'
 			list = os.listdir(path)
-			# l = len(list)
-			l = 50
+			l = len(list)
+			#l = 50
 			t = int(0.7 * l)
 			for img in xrange(t):
 				spl = list[img].split('.')
