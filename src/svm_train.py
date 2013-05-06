@@ -44,7 +44,7 @@ def train_routine(training_file, output_folder):
 
         try:
             img = cv2.imread(path)
-            img = cv2.resize(img, (500, 500))
+            #img = cv2.resize(img, (500, 500))
         except Exception as e:
             print e
             continue
