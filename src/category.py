@@ -50,7 +50,10 @@ class Category:
         """Calculate bag of words using the features
         added to an object."""
         for feature in self.features:
-            labels, _ = vq(numpy.array(feature), centroids)
+            try:
+                labels, _ = vq(numpy.array(feature), centroids)
+            except:
+                continue
             bow = numpy.zeros(FEATURE_TYPES)
             for label in labels:
                 bow[label] += 1

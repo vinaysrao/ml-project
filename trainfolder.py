@@ -19,7 +19,7 @@ def add_files(folder, trainfile, testfile):
 	test = open(testfile, 'w')
 	
 	try:
-                numofclasses = int(sys.argv[-1])
+                numofclasses = int(sys.argv[4])
         except:
                 numofclasses = len(os.listdir(folder))
 
@@ -32,8 +32,12 @@ def add_files(folder, trainfile, testfile):
 		if os.path.isdir(folder + file):
 			path = os.path.abspath(folder + file) + '/'
 			list = os.listdir(path)
+			try:
+                                l = int(sys.argv[5])
+                        except:
+                                l = len(list)
 			l = len(list)
-			#l = 30
+			#l = 50
 			t = int(0.7 * l)
 			for img in xrange(t):
 				spl = list[img].split('.')

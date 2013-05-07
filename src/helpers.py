@@ -6,6 +6,7 @@ import sys
 FEATURE_TYPES = 1000  # Number of clusters features are put into; thus forming kinds of features. Usually sqrt(n/2)
 try:
     FEATURE_TYPES = int(sys.argv[3])
+    print "Feature types: ", FEATURE_TYPES
 except:
     pass
 

@@ -6,7 +6,7 @@ import helpers
 from helpers import FEATURE_TYPES
 from scipy.cluster.vq import kmeans2
 
-if __name__ == "__main__":
+def routine():
     if len(sys.argv) < 3:
         print "Usage: $python traincentroids.py inputfile outputfolder"
         sys.exit(1)
@@ -23,7 +23,8 @@ if __name__ == "__main__":
         category, path = line.strip().split(';')
         img = cv2.imread(path)
         keypoints, descriptors = surf.detectAndCompute(img, None)
-
+        if descriptors is None:
+            continue
         for d in descriptors:
             features.append(d)
 
@@ -33,3 +34,6 @@ if __name__ == "__main__":
     centroids, labels = kmeans2(features, FEATURE_TYPES)
 
     helpers.saveObject(centroids, outputfolder + 'centroids.txt')
+
+if __name__ == "__main__"
+    routine()
