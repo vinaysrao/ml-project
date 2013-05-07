@@ -6,12 +6,7 @@ import helpers
 from helpers import FEATURE_TYPES
 from scipy.cluster.vq import kmeans2
 
-def routine():
-    if len(sys.argv) < 3:
-        print "Usage: $python traincentroids.py inputfile outputfolder"
-        sys.exit(1)
-    inputfile = sys.argv[1]
-    outputfolder = sys.argv[2]
+def routine(inputfile, outputfolder):
     if outputfolder[-1] != '/':
         outputfolder += '/'
     features = []
@@ -36,4 +31,9 @@ def routine():
     helpers.saveObject(centroids, outputfolder + 'centroids.txt')
 
 if __name__ == "__main__"
+    if len(sys.argv) < 3:
+        print "Usage: $python traincentroids.py inputfile outputfolder"
+        sys.exit(1)
+    inputfile = sys.argv[1]
+    outputfolder = sys.argv[2]
     routine()
