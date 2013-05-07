@@ -28,7 +28,7 @@ def routine(inputfile, outputfolder):
     print "Performing kmeans on: ", features.shape
     centroids, labels = kmeans2(features, FEATURE_TYPES)
 
-    helpers.saveObject(centroids, outputfolder + 'centroids.txt')
+    return centroids
 
 if __name__ == "__main__"
     if len(sys.argv) < 3:
@@ -36,4 +36,5 @@ if __name__ == "__main__"
         sys.exit(1)
     inputfile = sys.argv[1]
     outputfolder = sys.argv[2]
-    routine()
+    centroids = routine(inputfile, outputfolder)
+    helpers.saveObject(centroids, outputfolder + 'centroids.txt')
