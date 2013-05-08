@@ -1,7 +1,5 @@
 import numpy
 from scipy.cluster.vq import vq
-import random
-import numpy
 
 import helpers
 from helpers import FEATURE_TYPES
