@@ -30,7 +30,7 @@ def routine(inputfile, outputfolder):
 
     return centroids
 
-if __name__ == "__main__"
+if __name__ == "__main__":
     if len(sys.argv) < 3:
         print "Usage: $python traincentroids.py inputfile outputfolder"
         sys.exit(1)

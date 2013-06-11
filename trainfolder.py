@@ -36,8 +36,8 @@ def add_files(folder, trainfile, testfile):
                                 l = int(sys.argv[5])
                         except:
                                 l = len(list)
-			l = len(list)
-			#l = 50
+			#l = len(list)
+			l = 10
 			t = int(0.7 * l)
 			for img in xrange(t):
 				spl = list[img].split('.')

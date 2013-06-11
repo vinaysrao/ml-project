@@ -27,11 +27,17 @@ class Category:
         self.label = label
         self.features = features
         self.bagofwords = list()
+        self.bow = numpy.zeros(FEATURE_TYPES)
+        self.n_features = 0
 
-    def add_feature(self, feature):
+    def add_feature(self, feature, keypoints=None, shape=None):
         """Add one feature vector from one image"""
         if self.features is None:
             self.features = list()
+        self.n_features += len(feature)
+        if keypoints and shape:
+            pass
+            #print keypoints[0].pt
         self.features.append(feature)
 
     def yield_features(self, n=20):
@@ -44,6 +50,18 @@ class Category:
         #features = random.sample(self.features, n)
         return features
 
+    def addBow(self, bow):
+        for i in xrange(len(bow)):
+            self.bow[i] += bow[i]
+
+    def bowN(self, n=None):
+        bow = self.bow.copy()
+        if n is None:
+            n = self.n_features
+        for i in xrange(len(self.bow)):
+            bow[i] /= n
+        return bow
+
     def calc_bagofwords(self, centroids):
         """Calculate bag of words using the features
         added to an object."""
@@ -55,5 +73,6 @@ class Category:
             bow = numpy.zeros(FEATURE_TYPES)
             for label in labels:
                 bow[label] += 1
+            self.addBow(bow)
             helpers.normalize(bow)
             self.bagofwords.append(bow)

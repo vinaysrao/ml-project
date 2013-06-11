@@ -7,6 +7,7 @@ from scipy.cluster.vq import kmeans2, vq, whiten
 import numpy
 
 import helpers
+
 from category import Category
 from helpers import FEATURE_TYPES
 
